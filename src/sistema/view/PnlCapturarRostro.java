@@ -335,18 +335,11 @@ public class PnlCapturarRostro extends JPanel {
         try {
             org.bytedeco.javacv.Frame frame = grabber.grab();
             if (frame == null || frame.image == null) return;
-            
-            BufferedImage img = null;
-            try {
-                // Intentar convertir directamente sin detección de rostros para evitar errores
-                img = servicio.frameABufferedImage(frame);
-            } catch (Exception e) {
-                // Si falla la conversión, continuar al siguiente frame
-                return;
-            }
-            
+
+            BufferedImage img = servicio.frameABufferedImage(frame);
+
             if (img != null) {
-                Image scaled = img.getScaledInstance(310, 240, Image.SCALE_FAST);
+                Image scaled = img.getScaledInstance(lblCamara.getWidth(), lblCamara.getHeight(), Image.SCALE_FAST);
                 SwingUtilities.invokeLater(() -> {
                     lblCamara.setIcon(new ImageIcon(scaled));
                     lblCamara.setText("");
@@ -354,7 +347,7 @@ public class PnlCapturarRostro extends JPanel {
                 });
             }
         } catch (Exception ex) {
-            // Silenciar completamente todos los errores para no saturar la consola
+            System.err.println("[PnlCapturarRostro] Error en actualizarPreview: " + ex.getMessage());
         }
     }
 

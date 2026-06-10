@@ -1,7 +1,6 @@
 package sistema.view;
 
 import org.bytedeco.javacv.*;
-import org.bytedeco.opencv.opencv_core.Mat;
 import sistema.dao.RostroDAO;
 import sistema.model.Empleado;
 import sistema.model.Usuario;
@@ -42,6 +41,7 @@ public class PnlLoginFacial extends JPanel {
     private boolean       reconociendo = false;
     private List<Empleado> empleadosConFoto;
     private ReconocimientoFacialService servicio;
+    private int           errorCount = 0;    // contador de errores de cámara
 
     // Callback para notificar al FrmLogin cuando el reconocimiento fue exitoso
     private final Runnable onExito;
@@ -191,8 +191,17 @@ public class PnlLoginFacial extends JPanel {
     public void detenerCamara() {
         if (timerPreview  != null) timerPreview.stop();
         if (timerAutoRecon != null) timerAutoRecon.stop();
-        servicio.cerrarCamara(grabber);
-        grabber = null;
+        if (grabber != null) {
+            try {
+                servicio.cerrarCamara(grabber);
+                System.out.println("[PnlLoginFacial] Cámara cerrada correctamente");
+                // Agregar delay de 2 segundos para asegurar que Windows libere completamente la cámara
+                Thread.sleep(2000);
+            } catch (Exception e) {
+                System.err.println("[PnlLoginFacial] Error al cerrar cámara: " + e.getMessage());
+            }
+            grabber = null;
+        }
         camaraActiva = false;
         btnReconocer.setEnabled(false);
     }
@@ -213,19 +222,11 @@ public class PnlLoginFacial extends JPanel {
         try {
             org.bytedeco.javacv.Frame frame = grabber.grab();
             if (frame == null || frame.image == null) return;
-            
-            BufferedImage img = null;
-            try {
-                // Intentar convertir directamente sin detección de rostros para evitar errores
-                img = servicio.frameABufferedImage(frame);
-            } catch (Exception e) {
-                // Si falla la conversión, continuar al siguiente frame
-                return;
-            }
-            
+
+            BufferedImage img = servicio.frameABufferedImage(frame);
+
             if (img != null) {
-                // Escalar para caber en el label
-                Image scaled = img.getScaledInstance(320, 240, Image.SCALE_FAST);
+                Image scaled = img.getScaledInstance(lblCamara.getWidth(), lblCamara.getHeight(), Image.SCALE_FAST);
                 SwingUtilities.invokeLater(() -> {
                     lblCamara.setIcon(new ImageIcon(scaled));
                     lblCamara.setText("");
@@ -233,7 +234,17 @@ public class PnlLoginFacial extends JPanel {
                 });
             }
         } catch (Exception ex) {
-            // Silenciar completamente todos los errores para no saturar la consola
+            System.err.println("[PnlLoginFacial] Error en actualizarPreview: " + ex.getMessage());
+            // Si hay error recurrente, reiniciar la cámara
+            errorCount++;
+            if (errorCount > 10) {
+                System.err.println("[PnlLoginFacial] Demasiados errores, reiniciando cámara...");
+                errorCount = 0;
+                SwingUtilities.invokeLater(() -> {
+                    detenerCamara();
+                    iniciarCamara();
+                });
+            }
         }
     }
 
