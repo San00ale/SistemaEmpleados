@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================
+     ReporteParcial.jrxml
+     Reporte mensual — Empleado TIEMPO PARCIAL
+     Cálculo: horas_trabajadas * $5.00 (máx 8h/día)
+     ============================================================ -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ReporteParcial"
+              pageWidth="842" pageHeight="595" orientation="Landscape"
+              columnWidth="782" leftMargin="30" rightMargin="30"
+              topMargin="20" bottomMargin="20"
+              uuid="a2222222-2222-4222-8222-222222222202">
+
+    <parameter name="NOMBRE_EMPLEADO" class="java.lang.String"/>
+    <parameter name="CEDULA"          class="java.lang.String"/>
+    <parameter name="MES_ANIO"        class="java.lang.String"/>
+
+    <field name="asiFecha"            class="java.time.LocalDate"/>
+    <field name="asiEntradaManana"    class="java.time.LocalTime"/>
+    <field name="asiSalidaManana"     class="java.time.LocalTime"/>
+    <field name="asiEntradaTarde"     class="java.time.LocalTime"/>
+    <field name="asiSalidaTarde"      class="java.time.LocalTime"/>
+    <field name="asiHorasTrabajadas"  class="java.math.BigDecimal"/>
+    <field name="asiAtrasoMinutos"    class="java.lang.Integer"/>
+
+    <variable name="TOTAL_HORAS" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[$F{asiHorasTrabajadas} != null ? $F{asiHorasTrabajadas}.doubleValue() : 0.0]]></variableExpression>
+    </variable>
+    <variable name="TOTAL_PAGO" class="java.lang.Double" calculation="Sum">
+        <variableExpression><![CDATA[($F{asiHorasTrabajadas} != null ? Math.min($F{asiHorasTrabajadas}.doubleValue(), 8.0) : 0.0) * 5.0]]></variableExpression>
+    </variable>
+
+    <!-- TITLE -->
+    <title>
+        <band height="80">
+            <rectangle><reportElement x="0" y="0" width="782" height="50" backcolor="#B40000" forecolor="#B40000"/><graphicElement><pen lineWidth="0"/></graphicElement></rectangle>
+            <staticText><reportElement x="0" y="4" width="782" height="24" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="16" isBold="true"/></textElement><text><![CDATA[Universidad Técnica de Ambato — Sistema de Empleados]]></text></staticText>
+            <staticText><reportElement x="0" y="28" width="782" height="18" forecolor="#FFDDDD"/><textElement textAlignment="Center"><font fontName="SansSerif" size="11"/></textElement><text><![CDATA[REPORTE MENSUAL — EMPLEADO TIEMPO PARCIAL ($5.00/hora)]]></text></staticText>
+            <textField><reportElement x="0" y="55" width="390" height="16"/><textElement><font fontName="SansSerif" size="10" isBold="true"/></textElement><textFieldExpression><![CDATA["Empleado: " + $P{NOMBRE_EMPLEADO} + "   Cédula: " + $P{CEDULA}]]></textFieldExpression></textField>
+            <textField><reportElement x="390" y="55" width="392" height="16"/><textElement textAlignment="Right"><font fontName="SansSerif" size="10" isBold="true"/></textElement><textFieldExpression><![CDATA["Período: " + $P{MES_ANIO} + "   Tarifa: $5.00/hora"]]></textFieldExpression></textField>
+        </band>
+    </title>
+
+    <!-- COLUMN HEADER -->
+    <columnHeader>
+        <band height="22">
+            <rectangle><reportElement x="0" y="0" width="782" height="22" backcolor="#B40000" forecolor="#B40000"/><graphicElement><pen lineWidth="0"/></graphicElement></rectangle>
+            <staticText><reportElement x="0"   y="3" width="90"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Fecha]]></text></staticText>
+            <staticText><reportElement x="90"  y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[E. Mañana]]></text></staticText>
+            <staticText><reportElement x="170" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[S. Mañana]]></text></staticText>
+            <staticText><reportElement x="250" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[E. Tarde]]></text></staticText>
+            <staticText><reportElement x="330" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[S. Tarde]]></text></staticText>
+            <staticText><reportElement x="410" y="3" width="120" height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Horas Trabajadas]]></text></staticText>
+            <staticText><reportElement x="530" y="3" width="120" height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Horas Efectivas (máx 8)]]></text></staticText>
+            <staticText><reportElement x="650" y="3" width="132" height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Pago del Día ($)]]></text></staticText>
+        </band>
+    </columnHeader>
+
+    <!-- DETAIL -->
+    <detail>
+        <band height="18">
+            <textField><reportElement x="0"   y="2" width="90"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiFecha}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression></textField>
+            <textField><reportElement x="90"  y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiEntradaManana}!=null?$F{asiEntradaManana}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="170" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiSalidaManana}!=null?$F{asiSalidaManana}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="250" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiEntradaTarde}!=null?$F{asiEntradaTarde}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="330" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiSalidaTarde}!=null?$F{asiSalidaTarde}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="410" y="2" width="120" height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiHorasTrabajadas}!=null?$F{asiHorasTrabajadas}.toPlainString():"0.00"]]></textFieldExpression></textField>
+            <textField><reportElement x="530" y="2" width="120" height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[String.format("%.2f", $F{asiHorasTrabajadas}!=null?Math.min($F{asiHorasTrabajadas}.doubleValue(),8.0):0.0)]]></textFieldExpression></textField>
+            <textField pattern="$#,##0.00"><reportElement x="650" y="2" width="132" height="14"/><textElement textAlignment="Right"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[($F{asiHorasTrabajadas}!=null?Math.min($F{asiHorasTrabajadas}.doubleValue(),8.0):0.0)*5.0]]></textFieldExpression></textField>
+            <line><reportElement x="0" y="17" width="782" height="1" forecolor="#DDDDDD"/></line>
+        </band>
+    </detail>
+
+    <!-- SUMMARY -->
+    <summary>
+        <band height="60">
+            <rectangle><reportElement x="0" y="5" width="782" height="50" backcolor="#FFF0F0" forecolor="#B40000"/><graphicElement><pen lineWidth="1" lineColor="#B40000"/></graphicElement></rectangle>
+            <staticText><reportElement x="10" y="12" width="200" height="14" forecolor="#B40000"/><textElement><font fontName="SansSerif" size="10" isBold="true"/></textElement><text><![CDATA[RESUMEN DEL MES]]></text></staticText>
+            <textField><reportElement x="10" y="28" width="350" height="14"/><textElement><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[String.format("Total horas trabajadas en el mes: %.2f h", $V{TOTAL_HORAS})]]></textFieldExpression></textField>
+            <textField><reportElement x="450" y="28" width="320" height="14"/><textElement textAlignment="Right"><font fontName="SansSerif" size="11" isBold="true"/></textElement><textFieldExpression><![CDATA[String.format("TOTAL A COBRAR: $%.2f", $V{TOTAL_PAGO})]]></textFieldExpression></textField>
+        </band>
+    </summary>
+</jasperReport>

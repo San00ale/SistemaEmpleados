@@ -1,0 +1,55 @@
+# Sistema de Empleados UTA — Docker Compose
+#
+# Uso recomendado en Windows (interfaz Swing en su PC):
+#   docker compose up -d mysql
+#   Ejecutar la app desde NetBeans con DB_HOST=localhost DB_PORT=3307
+#
+# Stack completo (app en contenedor Linux; requiere pantalla/X11 o VNC):
+#   docker compose --profile app up -d --build
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: sistema-empleados-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-bd_empleados}
+    ports:
+      - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/bd_empleados.sql:/docker-entrypoint-initdb.d/01-bd_empleados.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  app:
+    profiles: ["app"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sistema-empleados-app
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ${MYSQL_DATABASE:-bd_empleados}
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      JAVA_AWT_HEADLESS: "true"
+    # Descomente para intentar mostrar la ventana Swing del host (Linux):
+    # network_mode: host
+    # environment:
+    #   DISPLAY: ${DISPLAY:-:0}
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix
+
+volumes:
+  mysql_data:

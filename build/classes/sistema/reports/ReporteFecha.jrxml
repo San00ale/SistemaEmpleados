@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================
+     ReporteFecha.jrxml
+     Reporte de asistencias por fecha — todos los empleados
+     ============================================================ -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="ReporteFecha"
+              pageWidth="842" pageHeight="595" orientation="Landscape"
+              columnWidth="782" leftMargin="30" rightMargin="30"
+              topMargin="20" bottomMargin="20"
+              uuid="a3333333-3333-4333-8333-333333333303">
+
+    <parameter name="FECHA_REPORTE" class="java.lang.String"/>
+
+    <field name="cedulaEmpleado"  class="java.lang.String"/>
+    <field name="nombreEmpleado"  class="java.lang.String"/>
+    <field name="tipoJornada"     class="java.lang.String"/>
+    <field name="asiEntradaManana"    class="java.time.LocalTime"/>
+    <field name="asiSalidaManana"     class="java.time.LocalTime"/>
+    <field name="asiEntradaTarde"     class="java.time.LocalTime"/>
+    <field name="asiSalidaTarde"      class="java.time.LocalTime"/>
+    <field name="asiHorasTrabajadas"  class="java.math.BigDecimal"/>
+    <field name="asiAtrasoMinutos"    class="java.lang.Integer"/>
+
+    <variable name="CONT_EMP"       class="java.lang.Integer" calculation="Count">
+        <variableExpression><![CDATA[$F{cedulaEmpleado}]]></variableExpression>
+    </variable>
+    <variable name="TOTAL_ATRASO"   class="java.lang.Integer" calculation="Sum">
+        <variableExpression><![CDATA[$F{asiAtrasoMinutos}]]></variableExpression>
+    </variable>
+    <variable name="TOTAL_HORAS"    class="java.lang.Double"  calculation="Sum">
+        <variableExpression><![CDATA[$F{asiHorasTrabajadas}!=null?$F{asiHorasTrabajadas}.doubleValue():0.0]]></variableExpression>
+    </variable>
+
+    <!-- TITLE -->
+    <title>
+        <band height="80">
+            <rectangle><reportElement x="0" y="0" width="782" height="50" backcolor="#B40000" forecolor="#B40000"/><graphicElement><pen lineWidth="0"/></graphicElement></rectangle>
+            <staticText><reportElement x="0" y="4" width="782" height="24" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="16" isBold="true"/></textElement><text><![CDATA[Universidad Técnica de Ambato — Sistema de Empleados]]></text></staticText>
+            <staticText><reportElement x="0" y="28" width="782" height="18" forecolor="#FFDDDD"/><textElement textAlignment="Center"><font fontName="SansSerif" size="11"/></textElement><text><![CDATA[REPORTE DE ASISTENCIAS POR FECHA]]></text></staticText>
+            <textField><reportElement x="0" y="57" width="782" height="16"/><textElement textAlignment="Center"><font fontName="SansSerif" size="10" isBold="true"/></textElement><textFieldExpression><![CDATA["Fecha: " + $P{FECHA_REPORTE}]]></textFieldExpression></textField>
+        </band>
+    </title>
+
+    <!-- COLUMN HEADER -->
+    <columnHeader>
+        <band height="22">
+            <rectangle><reportElement x="0" y="0" width="782" height="22" backcolor="#B40000" forecolor="#B40000"/><graphicElement><pen lineWidth="0"/></graphicElement></rectangle>
+            <staticText><reportElement x="0"   y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Cédula]]></text></staticText>
+            <staticText><reportElement x="80"  y="3" width="160" height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Nombre Completo]]></text></staticText>
+            <staticText><reportElement x="240" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Tipo Jornada]]></text></staticText>
+            <staticText><reportElement x="320" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[E. Mañana]]></text></staticText>
+            <staticText><reportElement x="400" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[S. Mañana]]></text></staticText>
+            <staticText><reportElement x="480" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[E. Tarde]]></text></staticText>
+            <staticText><reportElement x="560" y="3" width="80"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[S. Tarde]]></text></staticText>
+            <staticText><reportElement x="640" y="3" width="70"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Horas]]></text></staticText>
+            <staticText><reportElement x="710" y="3" width="72"  height="16" forecolor="#FFFFFF"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9" isBold="true"/></textElement><text><![CDATA[Atraso(min)]]></text></staticText>
+        </band>
+    </columnHeader>
+
+    <!-- DETAIL -->
+    <detail>
+        <band height="18">
+            <textField><reportElement x="0"   y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{cedulaEmpleado}]]></textFieldExpression></textField>
+            <textField><reportElement x="80"  y="2" width="160" height="14"/><textElement><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{nombreEmpleado}]]></textFieldExpression></textField>
+            <textField><reportElement x="240" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{tipoJornada}]]></textFieldExpression></textField>
+            <textField><reportElement x="320" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiEntradaManana}!=null?$F{asiEntradaManana}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="400" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiSalidaManana}!=null?$F{asiSalidaManana}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="480" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiEntradaTarde}!=null?$F{asiEntradaTarde}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="560" y="2" width="80"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiSalidaTarde}!=null?$F{asiSalidaTarde}.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm")):"--"]]></textFieldExpression></textField>
+            <textField><reportElement x="640" y="2" width="70"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiHorasTrabajadas}!=null?$F{asiHorasTrabajadas}.toPlainString():"0.00"]]></textFieldExpression></textField>
+            <textField><reportElement x="710" y="2" width="72"  height="14"/><textElement textAlignment="Center"><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[$F{asiAtrasoMinutos}]]></textFieldExpression></textField>
+            <line><reportElement x="0" y="17" width="782" height="1" forecolor="#DDDDDD"/></line>
+        </band>
+    </detail>
+
+    <!-- SUMMARY -->
+    <summary>
+        <band height="50">
+            <rectangle><reportElement x="0" y="5" width="782" height="40" backcolor="#FFF0F0" forecolor="#B40000"/><graphicElement><pen lineWidth="1" lineColor="#B40000"/></graphicElement></rectangle>
+            <textField><reportElement x="10" y="15" width="250" height="14"/><textElement><font fontName="SansSerif" size="9" isBold="true"/></textElement><textFieldExpression><![CDATA["Total empleados presentes: " + $V{CONT_EMP}]]></textFieldExpression></textField>
+            <textField><reportElement x="270" y="15" width="250" height="14"/><textElement><font fontName="SansSerif" size="9"/></textElement><textFieldExpression><![CDATA[String.format("Total horas trabajadas: %.2f h", $V{TOTAL_HORAS})]]></textFieldExpression></textField>
+            <textField><reportElement x="530" y="15" width="240" height="14"/><textElement textAlignment="Right"><font fontName="SansSerif" size="9" isBold="true"/></textElement><textFieldExpression><![CDATA["Total atraso acumulado: " + $V{TOTAL_ATRASO} + " min"]]></textFieldExpression></textField>
+        </band>
+    </summary>
+</jasperReport>

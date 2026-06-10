@@ -1,0 +1,32 @@
+═══════════════════════════════════════════════════════════════
+  LIBRERÍAS EN lib/ — Sistema Empleados UTA
+  Verificado: compilación + runtime JDK 21
+═══════════════════════════════════════════════════════════════
+
+MYSQL
+  mysql-connector-j-9.6.0.jar          Driver JDBC (com.mysql.cj.jdbc.Driver)
+
+JASPERREPORTS / iReport
+  jasperreports-6.0.0.jar              Motor de reportes
+  groovy-2.4.5.jar                     Expresiones en JRXML
+  commons-beanutils, commons-collections-3.2.1, commons-digester-2.1
+  commons-logging-1.2.jar
+  itextpdf-5.5.4.jar, itext-pdfa-5.5.4.jar   Exportación PDF
+  jfreechart-1.0.12.jar, jcommon-1.0.15.jar  Gráficos (Jasper)
+
+JAVACV / RECONOCIMIENTO FACIAL (Bytedeco 1.5.9 / OpenCV 4.7.0)
+  javacv.jar                           API JavaCV
+  javacpp.jar + javacpp-windows-x86_64.jar
+  opencv.jar (4.7.0-1.5.9) + opencv-windows-x86_64.jar
+  openblas-0.3.23-1.5.9.jar + openblas-0.3.23-1.5.9-windows-x86_64.jar
+  ffmpeg.jar + ffmpeg-windows-x86_64.jar
+
+OTROS
+  AbsoluteLayout.jar                   Layout NetBeans (opcional)
+
+NO USAR (eliminado por duplicado/conflicto):
+  mysql-connector-java-5.0.8-bin.jar   ← driver antiguo, reemplazado por 9.6.0
+
+IMPORTANTE Windows 64 bits:
+  Los JAR *-windows-x86_64.jar son OBLIGATORIOS para cámara y OpenCV.
+  Sin openblas-*.jar el login facial falla con ClassNotFoundException.

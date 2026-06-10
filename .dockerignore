@@ -1,0 +1,11 @@
+build/
+dist/
+nbproject/private/
+.git/
+.gitignore
+*.md
+!README.txt
+.cursor/
+terminals/
+**/*.class
+**/.DS_Store
