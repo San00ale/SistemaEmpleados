@@ -90,7 +90,18 @@ public class FrmEmpleadoForm extends JPanel {
         txtNombres   = campo(); agregarFila(pnlForm, gbc, f++, "Nombres *:", txtNombres);
         txtApellidos = campo(); agregarFila(pnlForm, gbc, f++, "Apellidos *:", txtApellidos);
         txtCorreo    = campo(); agregarFila(pnlForm, gbc, f++, "Correo:", txtCorreo);
-        txtTelefono  = campo(); agregarFila(pnlForm, gbc, f++, "Teléfono:", txtTelefono);
+        txtTelefono  = campo();
+        txtTelefono.setDocument(new javax.swing.text.PlainDocument() {
+            @Override public void insertString(int offs, String str, javax.swing.text.AttributeSet a)
+                    throws javax.swing.text.BadLocationException {
+                if (str == null) return;
+                // Solo dígitos y máximo 10 caracteres
+                String soloDigitos = str.replaceAll("[^0-9]", "");
+                if (getLength() + soloDigitos.length() <= 10)
+                    super.insertString(offs, soloDigitos, a);
+            }
+        });
+        agregarFila(pnlForm, gbc, f++, "Teléfono (máx 10 dígitos):", txtTelefono);
         txtCargo     = campo(); agregarFila(pnlForm, gbc, f++, "Cargo:", txtCargo);
 
         cboTipo = new JComboBox<>(new String[]{"COMPLETO", "PARCIAL"});

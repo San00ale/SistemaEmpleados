@@ -66,16 +66,15 @@ public class FrmPrincipal extends JFrame {
         pnlMenu.setPreferredSize(new Dimension(215, 0));
         pnlMenu.setBorder(BorderFactory.createEmptyBorder(8, 0, 8, 0));
 
-        // ── Sección CONSULTAS (ambos perfiles) ──
-        pnlMenu.add(seccion("CONSULTAS"));
-        pnlMenu.add(botonMenu("Mis Asistencias",
-                () -> abrir(new FrmRegistroAsistencia())));
-        pnlMenu.add(botonMenu("Asistencia por Fecha",
-                () -> abrir(new FrmReporteFecha())));
-        pnlMenu.add(Box.createVerticalStrut(4));
-
-        // ── Sección REGISTRO DE ASISTENCIA (solo empleados) ──
+        // ── Sección CONSULTAS Y REGISTRO (solo empleados) ──
         if (!esAdmin) {
+            pnlMenu.add(seccion("CONSULTAS"));
+            pnlMenu.add(botonMenu("Mis Asistencias",
+                    () -> abrir(new FrmRegistroAsistencia())));
+            pnlMenu.add(botonMenu("Asistencia por Fecha",
+                    () -> abrir(new FrmReporteFecha())));
+            pnlMenu.add(Box.createVerticalStrut(4));
+
             pnlMenu.add(seccion("REGISTRO ASISTENCIA"));
             pnlMenu.add(botonMenu("Registrar Entrada", this::registrarEntrada));
             pnlMenu.add(botonMenu("Registrar Salida", this::registrarSalida));
