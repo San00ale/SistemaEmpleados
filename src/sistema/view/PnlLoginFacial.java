@@ -75,7 +75,7 @@ public class PnlLoginFacial extends JPanel {
         lblCamara.setBackground(Color.BLACK);
         lblCamara.setOpaque(true);
         lblCamara.setText("<html><center><font color='gray'>" +
-                "📷<br>Iniciando cámara...</font></center></html>");
+                "<br>Iniciando cámara...</font></center></html>");
 
         JPanel pnlCamara = new JPanel(new BorderLayout());
         pnlCamara.setBackground(Color.BLACK);
@@ -97,7 +97,7 @@ public class PnlLoginFacial extends JPanel {
         lblEstado.setForeground(Estilos.NEGRO_TEXTO);
 
         // ── Botones ──
-        btnReconocer = new JButton("🔍  Reconocer");
+        btnReconocer = new JButton(" Reconocer");
         Estilos.estilizarBotonPrimario(btnReconocer);
         btnReconocer.setPreferredSize(new Dimension(150, 34));
         btnReconocer.setEnabled(false);
@@ -141,9 +141,9 @@ public class PnlLoginFacial extends JPanel {
                 try {
                     empleadosConFoto = get();
                     if (empleadosConFoto.isEmpty()) {
-                        setEstado("⚠️ No hay empleados con foto registrada.", Color.ORANGE);
+                        setEstado("No hay empleados con foto registrada.", Color.ORANGE);
                     } else {
-                        setEstado("✔ " + empleadosConFoto.size() + " empleado(s) cargados. " +
+                        setEstado(empleadosConFoto.size() + " empleado(s) cargados. " +
                                   "Mire a la cámara.", Estilos.VERDE_OK);
                     }
                 } catch (Exception ex) {
@@ -171,15 +171,15 @@ public class PnlLoginFacial extends JPanel {
                     get(); // propaga excepciones
                     camaraActiva = true;
                     btnReconocer.setEnabled(true);
-                    setEstado("✔ Cámara activa. Mire directamente al lente.", Estilos.VERDE_OK);
+                    setEstado("Cámara activa. Mire directamente al lente.", Estilos.VERDE_OK);
                     iniciarTimerPreview();
                     iniciarAutoReconocimiento();
                     System.out.println("[PnlLoginFacial] Timer iniciado, cámara activa: " + camaraActiva);
                 } catch (Exception ex) {
-                    setEstado("❌ No se pudo abrir la cámara integrada. Verifique la conexión.",
+                    setEstado("No se pudo abrir la cámara integrada. Verifique la conexión.",
                               Color.RED);
                     lblCamara.setText("<html><center><font color='gray'>" +
-                            "❌<br>Sin cámara</font></center></html>");
+                            "<br>Sin cámara</font></center></html>");
                     lblCamara.repaint();
                     System.err.println("[PnlLoginFacial] Error al iniciar cámara: " + ex.getMessage());
                 }
@@ -265,13 +265,13 @@ public class PnlLoginFacial extends JPanel {
     private void ejecutarReconocimiento() {
         if (!camaraActiva || grabber == null || reconociendo) return;
         if (empleadosConFoto == null || empleadosConFoto.isEmpty()) {
-            setEstado("⚠️ No hay empleados con foto. Registre fotos primero.", Color.ORANGE);
+            setEstado("No hay empleados con foto. Registre fotos primero.", Color.ORANGE);
             return;
         }
 
         reconociendo = true;
         btnReconocer.setEnabled(false);
-        setEstado("🔍 Analizando rostro...", Color.DARK_GRAY);
+        setEstado("Analizando rostro...", Color.DARK_GRAY);
 
         SwingWorker<ResultadoReconocimiento, Void> worker = new SwingWorker<>() {
             @Override
@@ -319,7 +319,7 @@ public class PnlLoginFacial extends JPanel {
                 try {
                     Usuario u = get();
                     if (u == null) {
-                        setEstado("⚠️ El empleado no tiene cuenta de acceso asignada.", Color.ORANGE);
+                        setEstado("El empleado no tiene cuenta de acceso asignada.", Color.ORANGE);
                         if (timerAutoRecon != null) timerAutoRecon.restart();
                         return;
                     }

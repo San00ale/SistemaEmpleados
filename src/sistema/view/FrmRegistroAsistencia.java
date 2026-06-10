@@ -53,7 +53,7 @@ public class FrmRegistroAsistencia extends JPanel {
                 lblNombre.setText(empleadoActual.getNombreCompleto());
                 lblTipo.setText(empleadoActual.getEmpTipoJornada().name());
             } else {
-                setEstado("⚠ No se encontró el empleado asociado a su cuenta.", Color.RED);
+                setEstado("No se encontró el empleado asociado a su cuenta.", Color.RED);
             }
         } catch (Exception ex) {
             setEstado("Error al cargar empleado: " + ex.getMessage(), Color.RED);
@@ -88,7 +88,7 @@ public class FrmRegistroAsistencia extends JPanel {
         pnlNota.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(255, 193, 7)));
         JLabel lblNota = new JLabel(
             "ℹ️  Para registrar su asistencia del día, use el botón verde " +
-            "\"📋 REGISTRAR ASISTENCIA\" en la pantalla de inicio de sesión.");
+            "\"REGISTRAR ASISTENCIA\" en la pantalla de inicio de sesión.");
         lblNota.setFont(new Font("Segoe UI", Font.BOLD, 11));
         lblNota.setForeground(Estilos.NEGRO_TEXTO);
         pnlNota.add(lblNota);
@@ -117,8 +117,8 @@ public class FrmRegistroAsistencia extends JPanel {
         Estilos.estilizarCampo(txtFecha);
         pnlBuscar.add(txtFecha);
 
-        JButton btnConsultar = new JButton("🔍 Consultar");
-        JButton btnHoy       = new JButton("📅 Hoy");
+        JButton btnConsultar = new JButton("Consultar");
+        JButton btnHoy       = new JButton("Hoy");
         Estilos.estilizarBotonPrimario(btnConsultar);
         Estilos.estilizarBotonSecundario(btnHoy);
         pnlBuscar.add(btnConsultar);
@@ -197,21 +197,21 @@ public class FrmRegistroAsistencia extends JPanel {
         // Validar cédula
         String errCedula = Utilidades.mensajeValidacionCedula(cedula);
         if (errCedula != null) {
-            setEstado("⚠ " + errCedula, Color.RED);
+            setEstado(errCedula, Color.RED);
             return;
         }
 
         LocalDate fecha;
         try { fecha = LocalDate.parse(txtFecha.getText().trim()); }
         catch (Exception ex) {
-            setEstado("⚠ Fecha inválida. Use el formato AAAA-MM-DD.", Color.RED);
+            setEstado("Fecha inválida. Use el formato AAAA-MM-DD.", Color.RED);
             return;
         }
 
         try {
             Empleado emp = new EmpleadoDAO().buscarPorCedula(cedula);
             if (emp == null || !emp.isEmpActivo()) {
-                setEstado("⚠ Empleado no encontrado o inactivo.", Color.RED);
+                setEstado("Empleado no encontrado o inactivo.", Color.RED);
                 lblNombre.setText("—");
                 lblTipo.setText("");
                 modelo.setRowCount(0);
@@ -243,7 +243,7 @@ public class FrmRegistroAsistencia extends JPanel {
 
                 // Mensaje de estado con resumen
                 String estado = String.format(
-                    "✔ Asistencia encontrada | Horas: %s | Atraso: %d min | " +
+                    "Asistencia encontrada | Horas: %s | Atraso: %d min | " +
                     "Sal.Anticipada: %d min | Descuento: $%.2f",
                     a.getAsiHorasTrabajadas() != null
                         ? a.getAsiHorasTrabajadas().toPlainString() : "0.00",

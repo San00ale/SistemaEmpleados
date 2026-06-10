@@ -43,9 +43,9 @@ public class FrmEmpleados extends JPanel {
         txtBuscar = new JTextField(16);
         Estilos.estilizarCampo(txtBuscar);
         txtBuscar.setToolTipText("Buscar por nombre o cédula");
-        JButton btnBuscar    = new JButton("🔍");
-        JButton btnNuevo     = new JButton("➕ Nuevo");
-        JButton btnRefrescar = new JButton("🔄");
+        JButton btnBuscar    = new JButton("buscar");
+        JButton btnNuevo     = new JButton(" Nuevo");
+        JButton btnRefrescar = new JButton("refrescar");
         Estilos.estilizarBotonSecundario(btnBuscar);
         Estilos.estilizarBotonPrimario(btnNuevo);
         Estilos.estilizarBotonSecundario(btnRefrescar);
@@ -59,7 +59,7 @@ public class FrmEmpleados extends JPanel {
 
         // ── Tabla ──
         String[] cols = {"ID", "Cédula", "Nombres", "Apellidos",
-                         "Cargo", "Tipo Jornada", "Estado", "📷 Foto"};
+                         "Cargo", "Tipo Jornada", "Estado", " Foto"};
         modelo = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
@@ -76,8 +76,8 @@ public class FrmEmpleados extends JPanel {
         // ── Botones acción ──
         JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         pnlBtns.setBackground(Estilos.BLANCO);
-        JButton btnEditar = new JButton("✏️  Editar");
-        JButton btnElim   = new JButton("🗑️  Eliminar");
+        JButton btnEditar = new JButton(" Editar");
+        JButton btnElim   = new JButton(" Eliminar");
         Estilos.estilizarBotonPrimario(btnEditar);
         Estilos.estilizarBotonSecundario(btnElim);
         btnElim.setForeground(Estilos.ROJO_ERROR);
@@ -119,7 +119,7 @@ public class FrmEmpleados extends JPanel {
                 e.getEmpCargo(),
                 e.getEmpTipoJornada().name(),
                 e.isEmpActivo() ? "Activo" : "Inactivo",
-                e.isEmpTieneFoto() ? "✔ Sí" : "✗ No"
+                e.isEmpTieneFoto() ? "Sí" : "No"
             });
         }
     }

@@ -136,7 +136,7 @@ public class FrmEmpleadoForm extends JPanel {
         JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 10));
         pnlBtns.setBackground(Estilos.BLANCO);
 
-        JButton btnGuardar  = new JButton("💾  Guardar");
+        JButton btnGuardar  = new JButton("Guardar");
         JButton btnCancelar = new JButton("Cancelar");
         Estilos.estilizarBotonPrimario(btnGuardar);
         Estilos.estilizarBotonSecundario(btnCancelar);

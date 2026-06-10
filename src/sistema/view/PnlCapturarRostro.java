@@ -57,7 +57,7 @@ public class PnlCapturarRostro extends JPanel {
         JPanel pnlTop = new JPanel(new BorderLayout());
         pnlTop.setBackground(Estilos.ROJO_UTA);
         pnlTop.setBorder(BorderFactory.createEmptyBorder(10, 14, 10, 14));
-        JLabel lblTitulo = new JLabel("📸  Registro de Foto para Reconocimiento Facial");
+        JLabel lblTitulo = new JLabel("Registro de Foto para Reconocimiento Facial");
         lblTitulo.setFont(Estilos.FUENTE_TITULO);
         lblTitulo.setForeground(Estilos.BLANCO);
         pnlTop.add(lblTitulo, BorderLayout.WEST);
@@ -72,7 +72,7 @@ public class PnlCapturarRostro extends JPanel {
         Estilos.estilizarCampo(txtCedula);
         pnlBuscar.add(txtCedula);
 
-        btnBuscar = new JButton("🔍 Buscar");
+        btnBuscar = new JButton("Buscar");
         Estilos.estilizarBotonPrimario(btnBuscar);
         pnlBuscar.add(btnBuscar);
 
@@ -92,7 +92,7 @@ public class PnlCapturarRostro extends JPanel {
         lblTitCam.setFont(Estilos.FUENTE_SUBTIT);
         lblTitCam.setForeground(Estilos.NEGRO_TEXTO);
 
-        lblCamara = new JLabel("📷  Iniciando...", SwingConstants.CENTER);
+        lblCamara = new JLabel("Iniciando...", SwingConstants.CENTER);
         lblCamara.setPreferredSize(new Dimension(310, 240));
         lblCamara.setBackground(Color.BLACK);
         lblCamara.setOpaque(true);
@@ -137,7 +137,7 @@ public class PnlCapturarRostro extends JPanel {
         pnlBtns.setBackground(Estilos.BLANCO);
         pnlBtns.setOpaque(true);
 
-        btnCapturar = new JButton("📸  Capturar Foto");
+        btnCapturar = new JButton("Capturar Foto");
         btnCapturar.setPreferredSize(new Dimension(160, 36));
         btnCapturar.setEnabled(true); // Habilitado para pruebas
         btnCapturar.setToolTipText("Haga click para capturar foto del rostro");
@@ -153,7 +153,7 @@ public class PnlCapturarRostro extends JPanel {
         btnGuardar.setFocusPainted(false);
         btnGuardar.setToolTipText("Haga click para guardar la foto en la base de datos");
 
-        btnEliminarFoto = new JButton("🗑️  Eliminar Foto");
+        btnEliminarFoto = new JButton(" Eliminar foto");
         btnEliminarFoto.setPreferredSize(new Dimension(140, 36));
         btnEliminarFoto.setEnabled(true); // Habilitado para pruebas
         btnEliminarFoto.setBackground(new Color(108, 117, 125));
@@ -179,7 +179,7 @@ public class PnlCapturarRostro extends JPanel {
 
         // Nota
         JLabel lblNota = new JLabel(
-            "<html><i>💡 Consejos: buena iluminación frontal, mire directo a la cámara, " +
+            "<html><i>Consejos: buena iluminación frontal, mire directo a la cámara, " +
             "sin lentes de sol ni objetos que cubran el rostro.</i></html>",
             SwingConstants.CENTER);
         lblNota.setFont(Estilos.FUENTE_PEQUENA);
@@ -260,12 +260,12 @@ public class PnlCapturarRostro extends JPanel {
             btnGuardar.setEnabled(false);
             lblFotoCapturada.setIcon(null);
             lblFotoCapturada.setText(tieneFoto
-                ? "<html><center>✔ Ya tiene foto<br>registrada</center></html>"
+                ? "<html><center>Ya tiene foto<br>registrada</center></html>"
                 : "<html><center>Sin captura</center></html>");
             lblFotoCapturada.repaint();
 
             setEstado(tieneFoto
-                ? "✔ Este empleado ya tiene foto. Capture una nueva para reemplazarla."
+                ? "Este empleado ya tiene foto. Capture una nueva para reemplazarla."
                 : "Empleado listo. Presione 'Capturar Foto'.", Estilos.VERDE_OK);
         } catch (Exception ex) {
             setEstado("Error: " + ex.getMessage(), Color.RED);
@@ -286,15 +286,15 @@ public class PnlCapturarRostro extends JPanel {
                 try {
                     get();
                     camaraActiva = true;
-                    setEstado("✔ Cámara activa.", Estilos.VERDE_OK);
+                    setEstado("Cámara activa.", Estilos.VERDE_OK);
                     if (empleadoActual != null) btnCapturar.setEnabled(true);
                     timerPreview = new Timer(66, e -> actualizarPreview());
                     timerPreview.setRepeats(true);
                     timerPreview.start();
                     System.out.println("[PnlCapturarRostro] Timer iniciado, cámara activa: " + camaraActiva);
                 } catch (Exception ex) {
-                    setEstado("❌ No se pudo abrir la cámara integrada.", Color.RED);
-                    lblCamara.setText("<html><center><font color='gray'>❌ Sin cámara</font></center></html>");
+                    setEstado("No se pudo abrir la cámara integrada.", Color.RED);
+                    lblCamara.setText("<html><center><font color='gray'>Sin cámara</font></center></html>");
                     lblCamara.repaint();
                     System.err.println("[PnlCapturarRostro] Error al iniciar cámara: " + ex.getMessage());
                 }
@@ -380,7 +380,7 @@ public class PnlCapturarRostro extends JPanel {
                 try {
                     fotoCapturada = get();
                     if (fotoCapturada == null) {
-                        setEstado("❌ No se detectó ningún rostro. Mire directamente a la cámara.",
+                        setEstado("No se detectó ningún rostro. Mire directamente a la cámara.",
                                 Color.RED);
                         return;
                     }
@@ -391,7 +391,7 @@ public class PnlCapturarRostro extends JPanel {
                     lblFotoCapturada.setText("");
                     lblFotoCapturada.repaint();
                     btnGuardar.setEnabled(true);
-                    setEstado("✔ Rostro capturado. Presione 'Guardar en BD' para confirmar.",
+                    setEstado("Rostro capturado. Presione 'Guardar en BD' para confirmar.",
                             Estilos.VERDE_OK);
                 } catch (Exception ex) {
                     setEstado("Error al capturar: " + ex.getMessage(), Color.RED);
@@ -414,12 +414,12 @@ public class PnlCapturarRostro extends JPanel {
                 return;
             }
             JOptionPane.showMessageDialog(this,
-                "✔ Foto guardada correctamente para:\n" + empleadoActual.getNombreCompleto(),
+                "Foto guardada correctamente para:\n" + empleadoActual.getNombreCompleto(),
                 "Éxito", JOptionPane.INFORMATION_MESSAGE);
             fotoCapturada = null;
             btnGuardar.setEnabled(false);
             btnEliminarFoto.setEnabled(true);
-            setEstado("✔ Foto registrada exitosamente.", Estilos.VERDE_OK);
+            setEstado("Foto registrada exitosamente.", Estilos.VERDE_OK);
         } catch (Exception ex) {
             alerta("Error al guardar: " + ex.getMessage());
             ex.printStackTrace();

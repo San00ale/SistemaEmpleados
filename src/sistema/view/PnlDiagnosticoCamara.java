@@ -42,7 +42,7 @@ public class PnlDiagnosticoCamara extends JPanel {
         JPanel pnlTop = new JPanel(new BorderLayout());
         pnlTop.setBackground(Estilos.ROJO_UTA);
         pnlTop.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 16));
-        JLabel lblTit = new JLabel("🔧  Diagnóstico de Cámara");
+        JLabel lblTit = new JLabel("Diagnóstico de Cámara");
         lblTit.setFont(Estilos.FUENTE_TITULO);
         lblTit.setForeground(Estilos.BLANCO);
         JLabel lblSub = new JLabel("Verifique que la cámara funcione antes de registrar fotos");
@@ -71,18 +71,18 @@ public class PnlDiagnosticoCamara extends JPanel {
         cboCamara.setPreferredSize(new Dimension(260, 28));
         pnlControles.add(cboCamara);
 
-        btnProbar = new JButton("▶  Probar");
+        btnProbar = new JButton("Probar");
         Estilos.estilizarBotonPrimario(btnProbar);
         btnProbar.setPreferredSize(new Dimension(110, 30));
         pnlControles.add(btnProbar);
 
-        btnDetener = new JButton("⏹  Detener");
+        btnDetener = new JButton("Detener");
         Estilos.estilizarBotonSecundario(btnDetener);
         btnDetener.setPreferredSize(new Dimension(110, 30));
         btnDetener.setEnabled(false);
         pnlControles.add(btnDetener);
 
-        btnEscanear = new JButton("🔍  Escanear todas");
+        btnEscanear = new JButton("Escanear todas");
         Estilos.estilizarBotonSecundario(btnEscanear);
         btnEscanear.setPreferredSize(new Dimension(150, 30));
         pnlControles.add(btnEscanear);
@@ -100,7 +100,7 @@ public class PnlDiagnosticoCamara extends JPanel {
         lblTitCam.setForeground(Estilos.NEGRO_TEXTO);
 
         lblCamara = new JLabel(
-            "<html><center><br><br>📷<br><br>Presione 'Probar'<br>para iniciar</center></html>",
+            "<html><center><br><br><br><br>Presione 'Probar'<br>para iniciar</center></html>",
             SwingConstants.CENTER);
         lblCamara.setPreferredSize(new Dimension(320, 240));
         lblCamara.setBackground(Color.BLACK);
@@ -190,17 +190,17 @@ public class PnlDiagnosticoCamara extends JPanel {
                     get();
                     camaraActiva = true;
                     btnDetener.setEnabled(true);
-                    log("✔ Cámara " + indice + " abierta correctamente.");
+                    log("Cámara " + indice + " abierta correctamente.");
                     log("  Resolución: 640 x 480");
-                    setEstado("✔ Cámara " + indice + " activa — Reconocimiento facial disponible.",
+                    setEstado("Cámara " + indice + " activa — Reconocimiento facial disponible.",
                             Estilos.VERDE_OK);
                     iniciarPreview();
                 } catch (Exception ex) {
                     btnProbar.setEnabled(true);
-                    log("✗ Error cámara " + indice + ": " + ex.getMessage());
+                    log("Error cámara " + indice + ": " + ex.getMessage());
                     log("  Verifique la conexión de la cámara.");
-                    setEstado("❌ No se pudo abrir la cámara " + indice + ".", Color.RED);
-                    lblCamara.setText("<html><center><font color='gray'>❌ Sin cámara</font></center></html>");
+                    setEstado("No se pudo abrir la cámara " + indice + ".", Color.RED);
+                    lblCamara.setText("<html><center><font color='gray'>Sin cámara</font></center></html>");
                     lblCamara.repaint();
                 }
             }
@@ -246,7 +246,7 @@ public class PnlDiagnosticoCamara extends JPanel {
         grabber = null;
         camaraActiva = false;
         lblCamara.setIcon(null);
-        lblCamara.setText("<html><center><font color='gray'>📷<br>Cámara detenida</font></center></html>");
+        lblCamara.setText("<html><center><font color='gray'><br>Cámara detenida</font></center></html>");
         lblCamara.repaint();
         btnProbar.setEnabled(true);
         btnDetener.setEnabled(false);
@@ -295,7 +295,7 @@ public class PnlDiagnosticoCamara extends JPanel {
                 }
                 publish("\nTotal cámaras encontradas: " + encontradas);
                 if (encontradas == 0) {
-                    publish("⚠ No se detectó ninguna cámara.");
+                    publish("No se detectó ninguna cámara.");
                     publish("  Verifique que la webcam esté conectada y los drivers instalados.");
                 }
                 return null;

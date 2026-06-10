@@ -86,8 +86,8 @@ public class FrmReporteEmpleado extends JPanel {
         Estilos.estilizarCombo(cboAnio);
         pnlFiltros.add(cboAnio);
 
-        JButton btnConsultar = new JButton("🔍 Consultar");
-        JButton btnPDF       = new JButton("📄 Ver PDF");
+        JButton btnConsultar = new JButton("Consultar");
+        JButton btnPDF       = new JButton("Ver PDF");
         Estilos.estilizarBotonPrimario(btnConsultar);
         Estilos.estilizarBotonSecundario(btnPDF);
         pnlFiltros.add(btnConsultar);

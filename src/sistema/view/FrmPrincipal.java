@@ -48,7 +48,7 @@ public class FrmPrincipal extends JFrame {
         pnlTop.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
 
         JLabel lblTitulo = new JLabel(
-            "🎓  Universidad Técnica de Ambato — Sistema de Empleados");
+            "Universidad Técnica de Ambato — Sistema de Empleados");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 15));
         lblTitulo.setForeground(Estilos.BLANCO);
 
@@ -68,44 +68,44 @@ public class FrmPrincipal extends JFrame {
 
         // ── Sección CONSULTAS (ambos perfiles) ──
         pnlMenu.add(seccion("CONSULTAS"));
-        pnlMenu.add(botonMenu("📋  Mis Asistencias",
+        pnlMenu.add(botonMenu("Mis Asistencias",
                 () -> abrir(new FrmRegistroAsistencia())));
-        pnlMenu.add(botonMenu("📅  Asistencia por Fecha",
+        pnlMenu.add(botonMenu("Asistencia por Fecha",
                 () -> abrir(new FrmReporteFecha())));
         pnlMenu.add(Box.createVerticalStrut(4));
 
         // ── Sección REGISTRO DE ASISTENCIA (solo empleados) ──
         if (!esAdmin) {
             pnlMenu.add(seccion("REGISTRO ASISTENCIA"));
-            pnlMenu.add(botonMenu("🟢  Registrar Entrada", this::registrarEntrada));
-            pnlMenu.add(botonMenu("🔴  Registrar Salida", this::registrarSalida));
+            pnlMenu.add(botonMenu("Registrar Entrada", this::registrarEntrada));
+            pnlMenu.add(botonMenu("Registrar Salida", this::registrarSalida));
             pnlMenu.add(Box.createVerticalStrut(4));
         }
 
         if (esAdmin) {
             // ── Solo ADMIN ──
             pnlMenu.add(seccion("REPORTES"));
-            pnlMenu.add(botonMenu("📊  Reporte por Empleado",
+            pnlMenu.add(botonMenu(" Reporte por Empleado",
                     () -> abrir(new FrmReporteEmpleado())));
             pnlMenu.add(Box.createVerticalStrut(4));
 
             pnlMenu.add(seccion("GESTIÓN EMPLEADOS"));
-            pnlMenu.add(botonMenu("👥  Lista de Empleados",
+            pnlMenu.add(botonMenu(" Lista de Empleados",
                     () -> abrir(new FrmEmpleados())));
-            pnlMenu.add(botonMenu("➕  Nuevo Empleado",
+            pnlMenu.add(botonMenu("Nuevo Empleado",
                     () -> abrir(new FrmEmpleadoForm(null))));
             pnlMenu.add(Box.createVerticalStrut(4));
 
             pnlMenu.add(seccion("RECONOCIMIENTO FACIAL"));
-            pnlMenu.add(botonMenu("📸  Registrar Foto Rostro",
+            pnlMenu.add(botonMenu(" Registrar Foto Rostro",
                     () -> abrir(new PnlCapturarRostro())));
-            pnlMenu.add(botonMenu("🔧  Diagnóstico Cámara",
+            pnlMenu.add(botonMenu(" Diagnóstico Cámara",
                     () -> abrir(new PnlDiagnosticoCamara())));
             pnlMenu.add(Box.createVerticalStrut(4));
         }
 
         pnlMenu.add(Box.createVerticalGlue());
-        pnlMenu.add(botonMenu("🚪  Cerrar Sesión", this::cerrarSesion));
+        pnlMenu.add(botonMenu("Cerrar Sesión", this::cerrarSesion));
 
         // ── Contenido central ──────────────────────────────────
         pnlContenido = new JPanel(new BorderLayout());

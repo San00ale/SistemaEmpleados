@@ -70,8 +70,8 @@ public class FrmLogin extends JFrame {
         // ── Tabs ──
         tabs = new JTabbedPane(JTabbedPane.TOP);
         tabs.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        tabs.addTab("🔑  Credenciales", buildTabCredenciales());
-        tabs.addTab("📷  Facial",        buildTabFacial());
+        tabs.addTab("  Credenciales", buildTabCredenciales());
+        tabs.addTab("  Facial",        buildTabFacial());
 
         tabs.addChangeListener(e -> {
             if (tabs.getSelectedIndex() == 1 && pnlFacial != null)

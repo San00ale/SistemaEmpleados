@@ -56,9 +56,9 @@ public class FrmReporteFecha extends JPanel {
         Estilos.estilizarCampo(txtFecha);
         pnlFiltros.add(txtFecha);
 
-        JButton btnConsultar = new JButton("🔍 Consultar");
-        JButton btnHoy       = new JButton("📅 Hoy");
-        JButton btnPDF       = new JButton("📄 Ver PDF");
+        JButton btnConsultar = new JButton("Consultar");
+        JButton btnHoy       = new JButton("Hoy");
+        JButton btnPDF       = new JButton("Ver PDF");
         Estilos.estilizarBotonPrimario(btnConsultar);
         Estilos.estilizarBotonSecundario(btnHoy);
         Estilos.estilizarBotonSecundario(btnPDF);
