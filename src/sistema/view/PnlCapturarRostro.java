@@ -9,6 +9,8 @@ import sistema.util.Estilos;
 import sistema.util.ReconocimientoFacialService;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -138,27 +140,18 @@ public class PnlCapturarRostro extends JPanel {
         pnlBtns.setOpaque(true);
 
         btnCapturar = new JButton("Capturar Foto");
-        btnCapturar.setPreferredSize(new Dimension(160, 36));
+        configurarBotonAccion(btnCapturar, new Color(220, 53, 69), new Color(180, 0, 0), 160);
         btnCapturar.setEnabled(true); // Habilitado para pruebas
         btnCapturar.setToolTipText("Haga click para capturar foto del rostro");
-        btnCapturar.setBackground(new Color(220, 53, 69));
-        btnCapturar.setForeground(Color.WHITE);
-        btnCapturar.setFocusPainted(false);
 
         btnGuardar = new JButton("Guardar en BD");
-        btnGuardar.setPreferredSize(new Dimension(150, 36));
+        configurarBotonAccion(btnGuardar, Estilos.VERDE_OK, new Color(0, 110, 0), 150);
         btnGuardar.setEnabled(true); // Habilitado para pruebas
-        btnGuardar.setBackground(Estilos.VERDE_OK);
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setFocusPainted(false);
         btnGuardar.setToolTipText("Haga click para guardar la foto en la base de datos");
 
-        btnEliminarFoto = new JButton(" Eliminar foto");
-        btnEliminarFoto.setPreferredSize(new Dimension(140, 36));
+        btnEliminarFoto = new JButton("Eliminar foto");
+        configurarBotonAccion(btnEliminarFoto, new Color(108, 117, 125), new Color(85, 95, 105), 140);
         btnEliminarFoto.setEnabled(true); // Habilitado para pruebas
-        btnEliminarFoto.setBackground(new Color(108, 117, 125));
-        btnEliminarFoto.setForeground(Color.WHITE);
-        btnEliminarFoto.setFocusPainted(false);
         btnEliminarFoto.setToolTipText("Haga click para eliminar la foto registrada");
 
         pnlBtns.add(btnCapturar);
@@ -458,6 +451,40 @@ public class PnlCapturarRostro extends JPanel {
             lblEstado.setText("  " + msg);
             lblEstado.setForeground(color);
         });
+    }
+
+    private void configurarBotonAccion(JButton btn, Color fondoActivo, Color bordeActivo, int ancho) {
+        Border bordeActivoCompuesto = BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(bordeActivo, 1),
+                BorderFactory.createEmptyBorder(6, 14, 6, 14));
+        Border bordeInactivoCompuesto = BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Estilos.GRIS_BORDE, 1),
+                BorderFactory.createEmptyBorder(6, 14, 6, 14));
+
+        btn.setUI(new BasicButtonUI());
+        btn.setPreferredSize(new Dimension(ancho, 36));
+        btn.setFont(Estilos.FUENTE_BOTON);
+        btn.setFocusPainted(false);
+        btn.setOpaque(true);
+        btn.setContentAreaFilled(true);
+        btn.setBorderPainted(true);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.addChangeListener(e -> {
+            if (btn.isEnabled()) {
+                btn.setBackground(fondoActivo);
+                btn.setForeground(Color.WHITE);
+                btn.setBorder(bordeActivoCompuesto);
+                btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            } else {
+                btn.setBackground(new Color(245, 245, 245));
+                btn.setForeground(new Color(70, 70, 70));
+                btn.setBorder(bordeInactivoCompuesto);
+                btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+        });
+        btn.setBackground(fondoActivo);
+        btn.setForeground(Color.WHITE);
+        btn.setBorder(bordeActivoCompuesto);
     }
 
     private void alerta(String msg) {
