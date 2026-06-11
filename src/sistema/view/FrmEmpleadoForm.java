@@ -82,13 +82,13 @@ public class FrmEmpleadoForm extends JPanel {
         txtCedula.addFocusListener(new java.awt.event.FocusAdapter() {
             @Override public void focusLost(java.awt.event.FocusEvent e) {
                 String msg = Utilidades.mensajeValidacionCedula(txtCedula.getText().trim());
-                lblErrCedula.setText(msg != null ? "⚠ " + msg : "✔ Cédula válida");
+                lblErrCedula.setText(msg != null ? msg : "Cédula válida");
                 lblErrCedula.setForeground(msg != null ? Estilos.ROJO_ERROR : Estilos.VERDE_OK);
             }
         });
 
-        txtNombres   = campo(); agregarFila(pnlForm, gbc, f++, "Nombres *:", txtNombres);
-        txtApellidos = campo(); agregarFila(pnlForm, gbc, f++, "Apellidos *:", txtApellidos);
+        txtNombres   = campo(); agregarFila(pnlForm, gbc, f++, "Nombre *:", txtNombres);
+        txtApellidos = campo(); agregarFila(pnlForm, gbc, f++, "Apellido *:", txtApellidos);
         txtCorreo    = campo(); agregarFila(pnlForm, gbc, f++, "Correo:", txtCorreo);
         txtTelefono  = campo();
         txtTelefono.setDocument(new javax.swing.text.PlainDocument() {

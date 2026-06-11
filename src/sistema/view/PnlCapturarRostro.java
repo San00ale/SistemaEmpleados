@@ -145,7 +145,7 @@ public class PnlCapturarRostro extends JPanel {
         btnCapturar.setForeground(Color.WHITE);
         btnCapturar.setFocusPainted(false);
 
-        btnGuardar = new JButton("💾  Guardar en BD");
+        btnGuardar = new JButton("Guardar en BD");
         btnGuardar.setPreferredSize(new Dimension(150, 36));
         btnGuardar.setEnabled(true); // Habilitado para pruebas
         btnGuardar.setBackground(Estilos.VERDE_OK);
@@ -359,7 +359,7 @@ public class PnlCapturarRostro extends JPanel {
         if (!camaraActiva || grabber == null) { alerta("Cámara no disponible."); return; }
         if (empleadoActual == null) { alerta("Busque un empleado primero."); return; }
 
-        setEstado("📸 Capturando...", Color.DARK_GRAY);
+        setEstado("Capturando...", Color.DARK_GRAY);
 
         SwingWorker<byte[], Void> w = new SwingWorker<>() {
             @Override protected byte[] doInBackground() throws Exception {
